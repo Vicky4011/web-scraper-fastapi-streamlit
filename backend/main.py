@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from scraper import fetch_html
 
 app = FastAPI()
 
@@ -10,16 +11,10 @@ def home():
     }
 
 
-@app.get("/about")
-def about():
-    return {
-        "application": "Web Scraper",
-        "version": "1.0"
-    }
-
-
 @app.get("/scrape")
 def scrape(url: str):
+    html = fetch_html(url)
+
     return {
-        "received_url": url
+        "html": html
     }
