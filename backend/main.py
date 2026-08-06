@@ -16,5 +16,5 @@ def scrape(url: str):
     html = fetch_html(url)
 
     return {
-        "html": html
+        "preview": html[:500]
     }
