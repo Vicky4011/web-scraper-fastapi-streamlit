@@ -9,12 +9,28 @@ def scrape_page(url: str):
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    quote_tags = soup.find_all("span", class_="text")
+    quote_blocks = soup.find_all("div", class_="quote")
 
     quotes = []
 
-    for quote in quote_tags:
-        quotes.append(quote.text)
+    for block in quote_blocks:
+
+        text = block.find("span", class_="text").text
+
+        author = block.find("small", class_="author").text
+
+        tag_elements = block.find_all("a", class_="tag")
+
+        tags = []
+
+        for tag in tag_elements:
+            tags.append(tag.text)
+
+        quotes.append({
+            "text": text,
+            "author": author,
+            "tags": tags
+        })
 
     return {
         "quotes": quotes
