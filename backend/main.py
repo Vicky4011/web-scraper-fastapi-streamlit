@@ -11,5 +11,4 @@ def home():
         "message": "Welcome to the Web Scraper API"
     }
 
-
 app.include_router(scraper_router)
