@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from services.scraper import scrape_page
+from routers.scraper_router import router as scraper_router
+
 
 app = FastAPI()
 
@@ -11,6 +12,4 @@ def home():
     }
 
 
-@app.get("/scrape")
-def scrape(url: str):
-    return scrape_page(url)
+app.include_router(scraper_router)
