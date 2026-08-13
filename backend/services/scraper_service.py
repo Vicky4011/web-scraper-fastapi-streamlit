@@ -9,7 +9,7 @@ def scrape_page(url: str):
         response.raise_for_status()
 
     except requests.exceptions.RequestException as e:
-            raise ValueError(f"Unable to access the website: {e}")
+        raise ValueError(f"Unable to access the website: {e}")
 
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -19,16 +19,25 @@ def scrape_page(url: str):
 
     for block in quote_blocks:
 
-        text = block.find("span", class_="text").text
+        text_element = block.find("span", class_="text")
+        author_element = block.find("small", class_="author")
 
-        author = block.find("small", class_="author").text
+        if text_element:
+            text = text_element.get_text(strip=True)
+        else:
+            text = "Unknown"
+
+        if author_element:
+            author = author_element.get_text(strip=True)
+        else:
+            author = "Unknown"
 
         tag_elements = block.find_all("a", class_="tag")
 
         tags = []
 
         for tag in tag_elements:
-            tags.append(tag.text)
+            tags.append(tag.get_text(strip=True))     #strip=True->removes unnecessary whitespace
 
         quotes.append({
             "text": text,
