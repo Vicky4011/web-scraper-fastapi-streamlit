@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
+
 
 class Quote(BaseModel):
     text: str
@@ -8,3 +9,7 @@ class Quote(BaseModel):
 
 class QuoteResponse(BaseModel):
     quotes: list[Quote]
+
+
+class ScrapeRequest(BaseModel):
+    url: HttpUrl

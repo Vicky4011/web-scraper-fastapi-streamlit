@@ -1,17 +1,17 @@
 from fastapi import APIRouter, HTTPException
 
-from models.schemas import QuoteResponse
+from models.schemas import QuoteResponse, ScrapeRequest
 from services.scraper_service import scrape_page
 
 
 router = APIRouter()
 
 
-@router.get("/scrape", response_model=QuoteResponse)
-def scrape(url: str):
+@router.post("/scrape", response_model=QuoteResponse)
+def scrape(request: ScrapeRequest):
 
     try:
-        return scrape_page(url)
+        return scrape_page(str(request.url))
 
     except ValueError as e:
         raise HTTPException(
